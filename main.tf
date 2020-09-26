@@ -95,14 +95,14 @@ resource "aws_s3_bucket_policy" "spa_policy_attach" {
 
 locals {
   static_origin_id = "static_origin"
-  spa_origin_id = "spa_origin"
+  spa_origin_id    = "spa_origin"
 }
 
 resource "aws_cloudfront_distribution" "web_distribution" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  price_class = "PriceClass_200"
+  price_class         = "PriceClass_200"
 
   origin {
     domain_name = aws_s3_bucket.static_bucket.bucket_regional_domain_name
@@ -142,7 +142,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
   }
 
   ordered_cache_behavior {
-    path_pattern     = "/static/*"
+    path_pattern     = "static/*"
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
     target_origin_id = local.static_origin_id

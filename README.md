@@ -17,3 +17,10 @@ Also make sure you have an AWS account setup, with default profile configured as
 * `environment_name`: *Required* - The name of the environment that the module is used for. The name of the IAM resources will be derived from this.
 
 
+# Run
+
+1. terraform init
+
+2. terraform plan -out tf.plan
+
+3. terraform apply tf.plan

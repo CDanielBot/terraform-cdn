@@ -23,13 +23,13 @@ variable "domain_name" {
 }
 
 variable "static_bucket_name" {
-  type = string
+  type        = string
   description = "S3 bucket to hold the SPA"
   default     = "danielbot-epilot-static"
 }
 
 variable "spa_bucket_name" {
-  type = string
+  type        = string
   description = "S3 bucket to hold the SPA"
   default     = "danielbot-epilot-spa"
 }
