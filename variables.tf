@@ -30,7 +30,7 @@ variable "www_domain_name" {
 
 variable "static_bucket_name" {
   type        = string
-  description = "S3 bucket to hold the SPA"
+  description = "S3 bucket to hold the static assetsS"
   default     = "danielbot-epilot-static"
 }
 
@@ -48,13 +48,13 @@ variable "cdn_logging_bucket_name" {
 
 variable "logging_bucket_name" {
   type        = string
-  description = "S3 bucket to hold the S3 buckets' logging"
+  description = "S3 bucket to hold the S3 buckets logging"
   default     = "danielbot-epilot-s3-buckets-logging"
 }
 
 variable "acm_certificate_arn" {
   type        = string
-  description = "ARN of the ACM Certificate to be used for Cloudfront"
+  description = "ARN of the ACM Certificate to be used for Cloudfront & DNS setup"
   default     = "arn:aws:acm:us-east-1:028723015732:certificate/df12c875-9de6-45d8-9c7d-e6a376361200"
 }
 

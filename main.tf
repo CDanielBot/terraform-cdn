@@ -131,7 +131,7 @@ resource "aws_s3_bucket_policy" "spa_policy_attach" {
 #               Bucket, Policy Def & Attach for CDN logging bucket
 #-------------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "cdn_logging_bucket" {
-  bucket = var.cdn_logging_bucket_name
+  bucket        = var.cdn_logging_bucket_name
   acl           = "log-delivery-write"
   force_destroy = var.origin_force_destroy
 
