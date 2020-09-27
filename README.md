@@ -1,3 +1,15 @@
+# General
+
+<h3> Terraform module for deploying: </h3>
+
+1. DNS zone & records based on ACM certificate ARN
+
+2. CDN for static assets and SPA web app
+
+3. Separate S3 buckets for static assets and SPA web app
+
+4. Logging buckets
+
 # Setup
 
 Make sure you have these tools previously installed on your machine:
@@ -24,3 +36,11 @@ Also make sure you have an AWS account setup, with default profile configured as
 2. terraform plan -out tf.plan
 
 3. terraform apply tf.plan
+
+# Destroy infrastructure
+
+1. terraform destroy
+
+# Improvements roadmap
+
+1. Consider KMS key instead of AES256 for buckets encryption
