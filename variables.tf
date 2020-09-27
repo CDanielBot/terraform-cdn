@@ -22,6 +22,12 @@ variable "domain_name" {
   default     = "danielbot-epilot.ml"
 }
 
+variable "www_domain_name" {
+  type        = string
+  description = "WWW Domain name of the web app"
+  default     = "www.danielbot-epilot.ml"
+}
+
 variable "static_bucket_name" {
   type        = string
   description = "S3 bucket to hold the SPA"
@@ -32,6 +38,24 @@ variable "spa_bucket_name" {
   type        = string
   description = "S3 bucket to hold the SPA"
   default     = "danielbot-epilot-spa"
+}
+
+variable "cdn_logging_bucket_name" {
+  type        = string
+  description = "S3 bucket to hold the CDN logging"
+  default     = "danielbot-epilot-cdn-logging"
+}
+
+variable "logging_bucket_name" {
+  type        = string
+  description = "S3 bucket to hold the S3 buckets' logging"
+  default     = "danielbot-epilot-s3-buckets-logging"
+}
+
+variable "acm_certificate_arn" {
+  type        = string
+  description = "ARN of the ACM Certificate to be used for Cloudfront"
+  default     = "arn:aws:acm:us-east-1:028723015732:certificate/df12c875-9de6-45d8-9c7d-e6a376361200"
 }
 
 variable "origin_force_destroy" {
