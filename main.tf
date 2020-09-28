@@ -273,7 +273,6 @@ resource "aws_cloudfront_distribution" "web_distribution" {
       cookies {
         forward = "none"
       }
-      headers = ["Origin"]
     }
 
     viewer_protocol_policy = "redirect-to-https"
@@ -283,7 +282,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
 
     # Add lambda edge for authentication
     lambda_function_association {
-      event_type = "origin-request"
+      event_type = "viewer-request"
       lambda_arn = aws_lambda_function.lambda_edge_auth.qualified_arn
     }
   }

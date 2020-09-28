@@ -11,7 +11,6 @@ exports.handler = (event, context, callback) => {
 
     // Require Basic authentication
     if (typeof headers.authorization == 'undefined' || headers.authorization[0].value != authString) {
-        console.log('Unauthorized request', { reqAuthHeader: headers.authorization, myAuthString: authString });
         const body = 'Unauthorized';
         const response = {
             status: '401',
@@ -24,6 +23,5 @@ exports.handler = (event, context, callback) => {
         callback(null, response);
     }
 
-    console.log('Request authenticated with success');
     callback(null, request);
 };
