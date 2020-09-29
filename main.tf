@@ -18,9 +18,8 @@ provider "aws" {
 #-------------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "${var.logging_bucket_name}-${var.env}"
-  acl    = "log-delivery-write"
+  acl    = "log-delivery-write" # allow log writing in this bucket
 
-  # in case logs con
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
