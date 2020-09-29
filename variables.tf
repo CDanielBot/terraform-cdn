@@ -19,15 +19,16 @@ variable "env" {
 variable "domain_name" {
   type        = string
   description = "Domain name of the web app"
+  default     = "danielbot-epilot.ml"
 }
 
 variable "www_domain_name" {
   type        = string
   description = "WWW Domain name of the web app"
+  default     = "www.danielbot-epilot.ml"
 }
 
 variable "acm_certificate_arn" {
   type        = string
   description = "ARN of the ACM Certificate to be used for Cloudfront & DNS setup"
-  default     = "arn:aws:acm:us-east-1:028723015732:certificate/df12c875-9de6-45d8-9c7d-e6a376361200"
 }

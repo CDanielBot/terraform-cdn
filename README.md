@@ -71,14 +71,14 @@ Also make sure you have:
 
 # Improvements roadmap
 
-1. Add rewriting rule for URLs without "www" prefix.
+1. Make buckets names dependent on env. Eg: dev/staging/prod envs can follow the same naming structure, but suffixed with env name. (DONE)
 
-2. Make buckets names dependent on env. Eg: dev/staging/prod envs can follow the same naming structure, but suffixed with env name. (DONE)
+2. Split root module into child module and call it. (DONE)
 
 3. Keep lambda code for authorization / static files / SPA web files in separate repos. (as an automation workaround they are kept in this repo)
 
-4. Split root module into child module and call it. (DONE)
+4. Add rewriting rule for URLs without "www" prefix, instead of DNS dispatch to CDN.
 
 5. Push tags to all terraform managed resources.
 
-6. Consider KMS key instead of AES256 for buckets encryption
+6. Consider KMS key instead of AES256 for buckets encryption.

@@ -124,7 +124,7 @@ resource "aws_s3_bucket_policy" "spa_policy_attach" {
 #               Bucket, Policy Def & Attach for CDN logging bucket
 #-------------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "cdn_logging_bucket" {
-  bucket        = var.cdn_logging_bucket_name
+  bucket        = "${var.cdn_logging_bucket_name}-${var.env}"
   acl           = "log-delivery-write"
   force_destroy = var.origin_force_destroy
 
@@ -152,6 +152,7 @@ locals {
 #-------------------------------------------------------------------------------------------
 #               CloudFront distribution for both static assets and SPA web app
 #-------------------------------------------------------------------------------------------
+
 resource "aws_cloudfront_distribution" "web_distribution" {
   enabled             = true
   is_ipv6_enabled     = false # to allow ip restrictions as per AWS docs
@@ -275,6 +276,7 @@ resource "aws_acm_certificate" "cert" {
 #-------------------------------------------------------------------------------------------
 #               DNS setup
 #-------------------------------------------------------------------------------------------
+
 resource "aws_route53_zone" "primary" {
   name = var.domain_name
 }
@@ -282,6 +284,18 @@ resource "aws_route53_zone" "primary" {
 resource "aws_route53_record" "www" {
   zone_id = aws_route53_zone.primary.zone_id
   name    = var.www_domain_name
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.web_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.web_distribution.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "missing_www" {
+  zone_id = aws_route53_zone.primary.zone_id
+  name    = var.domain_name
   type    = "A"
 
   alias {
