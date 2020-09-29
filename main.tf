@@ -24,7 +24,7 @@ module "webapp_s3_bucket_distribution" {
   source                    = "./modules/aws-web-distribution"
   env                       = var.env
   domain_name               = var.domain_name
-  www_domain_name           = var.domain_name
+  www_domain_name           = var.www_domain_name
   acm_certificate_arn       = var.acm_certificate_arn
   static_bucket_name        = "danielbot-epilot-static"
   spa_bucket_name           = "danielbot-epilot-spa"
