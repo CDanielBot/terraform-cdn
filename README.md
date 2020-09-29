@@ -36,9 +36,9 @@ Also make sure you have an AWS account setup, with default profile configured as
 
 * `env`: *Optional* - The name of the environment that the module is used for. The name of the IAM resources will be derived from this.
 
-* `domain_name`: *Optional* - Domain name of the web app. Default: danielbot-epilot.ml
+* `domain_name`: *Mandatory* - Domain name of the web app.
 
-* `www_domain_name`: *Optional* - www Domain name of the web app. Default: www.danielbot-epilot.ml
+* `www_domain_name`: *Mandatory* - www Domain name of the web app.
 
 * `static_bucket_name`: *Optional* - S3 bucket to hold the static assets. Default: danielbot-epilot-static
 
@@ -48,7 +48,7 @@ Also make sure you have an AWS account setup, with default profile configured as
 
 * `logging_bucket_name`: *Optional* - S3 bucket to hold the S3 buckets logging. Default: danielbot-epilot-s3-buckets-logging
 
-* `acm_certificate_arn`: *Optional* - ARN of the ACM Certificate to be used for Cloudfront & DNS setup.
+* `acm_certificate_arn`: *Mandatory* - ARN of the ACM Certificate to be used for Cloudfront & DNS setup.
 
 * `origin_force_destroy`: *Optional* - Should delete all objects from the bucket so that the bucket can be destroyed without error. Default: false
 
@@ -57,7 +57,7 @@ Also make sure you have an AWS account setup, with default profile configured as
 
 1. terraform init
 
-2. terraform import aws_acm_certificate.cert <cert_arn>
+2. terraform import module.webapp_s3_bucket_distribution.aws_acm_certificate.cert <cert_arn> 
 
 3. terraform plan -out tf.plan
 
@@ -69,16 +69,14 @@ Also make sure you have an AWS account setup, with default profile configured as
 
 # Improvements roadmap
 
-1. Consider KMS key instead of AES256 for buckets encryption
+1. Add rewriting rule for URLs without "www" prefix.
 
-2. Add rewriting rule for URLs without "www" prefix. Eg: https://danielbot-epilot.ml
+2. Make buckets names dependent on env. Eg: dev/staging/prod envs can follow the same naming structure, but suffixed with env name. (DONE)
 
-3. Make variables mandatory & add validations. Right now all variables have default values just for the sake of being easy to setup.
+3. Keep lambda code for authorization / static files / SPA web files in separate repos. (as an automation workaround they are kept in this repo)
 
-4. Make buckets names dependent on env. Eg: dev/staging/prod envs can follow the same naming structure, but suffixed with env name. (DONE)
+4. Split root module into child module and call it. (DONE)
 
-5. Keep lambda code for authorization in a separate repo
+5. Push tags to all terraform managed resources.
 
-6. Split root module into child modules.
-
-7. Resolve s3 deployment workaround for static & web SPA files. (assets directory is a temp dir, just for the sake of deploying a SPA + static file to S3 buckets)
+6. Consider KMS key instead of AES256 for buckets encryption
