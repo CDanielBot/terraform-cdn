@@ -17,7 +17,7 @@ provider "aws" {
 #                Bucket for logs: other S3 buckets will log here
 #-------------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "log_bucket" {
-  bucket = var.logging_bucket_name
+  bucket = "${var.logging_bucket_name}-${var.env}"
   acl    = "log-delivery-write"
 }
 
@@ -25,7 +25,7 @@ resource "aws_s3_bucket" "log_bucket" {
 #                Bucket for static assets
 #-------------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "static_bucket" {
-  bucket        = var.static_bucket_name
+  bucket        = "${var.static_bucket_name}-${var.env}"
   acl           = "private"
   force_destroy = var.origin_force_destroy
 
@@ -56,7 +56,7 @@ resource "aws_s3_bucket" "static_bucket" {
 #                Bucket for SPA web app
 #-------------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "spa_bucket" {
-  bucket        = var.spa_bucket_name
+  bucket        = "${var.spa_bucket_name}-${var.env}"
   acl           = "private"
   force_destroy = var.origin_force_destroy
 
@@ -210,7 +210,7 @@ data "archive_file" "lambda_zip" {
 
 resource "aws_lambda_function" "lambda_edge_auth" {
   filename         = "lambda/lambda_auth.zip"
-  function_name    = "lambda_edge_authorizer"
+  function_name    = "lambda_edge_authorizer_${var.env}"
   role             = aws_iam_role.lambda_edge_exec.arn
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   handler          = "index.handler"
@@ -332,6 +332,19 @@ resource "aws_cloudfront_distribution" "web_distribution" {
 }
 
 #-------------------------------------------------------------------------------------------
+#               ACM Certificate import
+#-------------------------------------------------------------------------------------------
+resource "aws_acm_certificate" "cert" {
+  provider          = aws.us_east_1 # certs must be deployed to us_east_1
+  domain_name       = "*.${var.domain_name}"
+  validation_method = "NONE" # NONE because it's imported from ACM
+  lifecycle {
+    prevent_destroy = true # don't touch this
+    ignore_changes  = all  # ignore any changes, as this is not managed by terraform
+  }
+}
+
+#-------------------------------------------------------------------------------------------
 #               DNS setup
 #-------------------------------------------------------------------------------------------
 resource "aws_route53_zone" "primary" {
@@ -348,4 +361,12 @@ resource "aws_route53_record" "www" {
     zone_id                = aws_cloudfront_distribution.web_distribution.hosted_zone_id
     evaluate_target_health = false
   }
+}
+
+resource "aws_route53_record" "cname" {
+  name    = aws_acm_certificate.cert.domain_validation_options.0.resource_record_name
+  type    = aws_acm_certificate.cert.domain_validation_options.0.resource_record_type
+  records = [aws_acm_certificate.cert.domain_validation_options.0.resource_record_value]
+  zone_id = aws_route53_zone.primary.zone_id
+  ttl     = 60
 }
