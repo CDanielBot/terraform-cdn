@@ -61,6 +61,21 @@ resource "aws_s3_bucket" "static_bucket" {
 }
 
 #-------------------------------------------------------------------------------------------
+#                Spa & static files deployment to S3
+#-------------------------------------------------------------------------------------------
+resource "null_resource" "upload_spa_files_to_s3" {
+  provisioner "local-exec" {
+    command = "AWS_PRFOFILE=${var.profile} aws s3 sync ${path.module}/assets/spa s3://${aws_s3_bucket.spa_bucket.id}"
+  }
+}
+
+resource "null_resource" "upload_static_files_to_s3" {
+  provisioner "local-exec" {
+    command = "AWS_PRFOFILE=${var.profile} aws s3 sync ${path.module}/assets/static s3://${aws_s3_bucket.static_bucket.id}/static"
+  }
+}
+
+#-------------------------------------------------------------------------------------------
 #                Bucket for SPA web app
 #-------------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "spa_bucket" {

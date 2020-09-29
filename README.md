@@ -59,9 +59,9 @@ Also make sure you have an AWS account setup, with default profile configured as
 
 2. terraform import aws_acm_certificate.cert <cert_arn>
 
-2. terraform plan -out tf.plan
+3. terraform plan -out tf.plan
 
-3. terraform apply tf.plan
+4. terraform apply tf.plan
 
 # Destroy infrastructure
 
@@ -80,3 +80,5 @@ Also make sure you have an AWS account setup, with default profile configured as
 5. Keep lambda code for authorization in a separate repo
 
 6. Split root module into child modules.
+
+7. Resolve s3 deployment workaround for static & web SPA files. (assets directory is a temp dir, just for the sake of deploying a SPA + static file to S3 buckets)
