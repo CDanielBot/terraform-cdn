@@ -10,3 +10,5 @@ tf.plan
 *.tfstate.*
 
 *.tfvars
+
+lambda/*.zip

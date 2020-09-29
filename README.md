@@ -57,6 +57,8 @@ Also make sure you have an AWS account setup, with default profile configured as
 
 1. terraform init
 
+2. terraform import aws_acm_certificate.cert <cert_arn>
+
 2. terraform plan -out tf.plan
 
 3. terraform apply tf.plan
@@ -73,4 +75,8 @@ Also make sure you have an AWS account setup, with default profile configured as
 
 3. Make variables mandatory & add validations. Right now all variables have default values just for the sake of being easy to setup.
 
-4. Make buckets names dependent on env. Eg: dev/staging/prod envs can follow the same naming structure, but prefixed with env name. 
+4. Make buckets names dependent on env. Eg: dev/staging/prod envs can follow the same naming structure, but suffixed with env name. (DONE)
+
+5. Keep lambda code for authorization in a separate repo
+
+6. Split root module into child modules.
