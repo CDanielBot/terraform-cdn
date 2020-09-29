@@ -231,7 +231,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
-  aliases = [var.www_domain_name] # add var.domain_name if certificate supports it
+  aliases = [var.domain_name, var.www_domain_name]
 
   restrictions {
     geo_restriction {

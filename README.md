@@ -25,7 +25,9 @@ Make sure you have these tools previously installed on your machine:
 * Terraform - https://learn.hashicorp.com/tutorials/terraform/install-cli
 
 
-Also make sure you have an AWS account setup, with default profile configured as well (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). 
+Also make sure you have:
+* AWS account setup, with default profile configured as well (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). 
+* an ACM certificate already configured & validated (status Issued) in AWS. It must support both values of domain_name and www_domain_name variables.
 
 
 # Variables
