@@ -82,3 +82,5 @@ Also make sure you have:
 5. Push tags to all terraform managed resources.
 
 6. Consider KMS key instead of AES256 for buckets encryption.
+
+7. Distribution is accessible only to DE and RO countries. In case the distribution must be accessible only for specific IP address ranges, configure CDN with AWS WAF web ACL & IP sets.
